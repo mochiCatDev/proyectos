@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 public class Empleado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	@Column(nullable = false, length = 100)
 	private String nombre;
@@ -33,18 +33,18 @@ public class Empleado {
 		super();
 	}
 
-	public Empleado(int id, String nombre, String cargo) {
+	public Empleado(Long id, String nombre, String cargo) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.cargo = cargo;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

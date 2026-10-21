@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class Tarea {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	@Column(nullable = false, length = 200)
 	private String descripcion;
@@ -42,7 +42,7 @@ public class Tarea {
 		super();
 	}
 
-	public Tarea(int id, String descripcion, LocalDate fechaLimite, double costoEstimado, Proyecto proyecto) {
+	public Tarea(Long id, String descripcion, LocalDate fechaLimite, double costoEstimado, Proyecto proyecto) {
 		super();
 		this.id = id;
 		this.descripcion = descripcion;
@@ -51,11 +51,11 @@ public class Tarea {
 		this.proyecto = proyecto;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

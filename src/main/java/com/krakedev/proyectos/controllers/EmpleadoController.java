@@ -63,7 +63,7 @@ public class EmpleadoController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> actualizar(@PathVariable int id, @RequestBody Empleado empleado) {
+	public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Empleado empleado) {
 		try {
 			empleado.setId(id);
 			Empleado actualizado = empleadoService.actualizar(empleado);
