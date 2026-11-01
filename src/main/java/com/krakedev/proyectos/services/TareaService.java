@@ -27,7 +27,7 @@ public class TareaService {
 	public Tarea buscarPorId(int id) {
 		return tareaRepository.findById(id).orElse(null);
 	}
-
+	
 	public Tarea actualizar(Tarea tarea) {
 		return tareaRepository.save(tarea);
 	}
