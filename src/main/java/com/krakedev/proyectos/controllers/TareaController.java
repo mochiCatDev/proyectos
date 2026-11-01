@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,31 @@ public class TareaController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error al listar las tareas: " + e.getMessage());
+		}
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> buscarPorId(@PathVariable int id) {
+		try {
+			Tarea tarea = tareaService.buscarPorId(id);
+			return ResponseEntity.ok(tarea);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error al buscar la tarea por su id: " + e.getMessage());
+		}
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> eliminar(@PathVariable int id) {
+		try {
+			boolean eliminado = tareaService.eliminar(id);
+			if (eliminado) {
+				ResponseEntity.ok("¡La tarea fue eliminada con exito!");
+			}
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarea no encontrada");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error al buscar la tarea por su id: " + e.getMessage());
 		}
 	}
 }
