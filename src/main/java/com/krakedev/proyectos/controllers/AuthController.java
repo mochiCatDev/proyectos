@@ -1,9 +1,11 @@
 package com.krakedev.proyectos.controllers;
 
 import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -69,5 +71,16 @@ public class AuthController {
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token no proporcionado");
 		}
+	}
+
+	@GetMapping("/perfil")
+	public ResponseEntity<?> verPerfil() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		String username = auth.getName();
+		String rol = auth.getAuthorities().iterator().next().getAuthority();
+
+		return ResponseEntity.ok(Map.of("mensaje", "Bienvenido al sistema protegido por Spring Security", "username",
+				username, "rol_detectado", rol, "status", "Autenticado exitosamente"));
 	}
 }
