@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class TareaController {
 		this.tareaService = tareaService;
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<?> crear(@RequestBody Tarea tarea) {
 		try {
@@ -36,6 +38,7 @@ public class TareaController {
 		}
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 	@GetMapping
 	public ResponseEntity<?> listar() {
 		try {
@@ -46,7 +49,7 @@ public class TareaController {
 					.body("Error al listar las tareas: " + e.getMessage());
 		}
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> buscarPorId(@PathVariable int id) {
 		try {
@@ -57,13 +60,13 @@ public class TareaController {
 					.body("Error al buscar la tarea por su id: " + e.getMessage());
 		}
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminar(@PathVariable int id) {
 		try {
 			boolean eliminado = tareaService.eliminar(id);
 			if (eliminado) {
-				ResponseEntity.ok("¡La tarea fue eliminada con exito!");
+				return ResponseEntity.ok("¡La tarea fue eliminada con éxito!");
 			}
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarea no encontrada");
 		} catch (Exception e) {
